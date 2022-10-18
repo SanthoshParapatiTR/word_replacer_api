@@ -1,0 +1,6 @@
+FROM public.ecr.aws/amundsen-dependancies/python3.7-slim:latest
+RUN pip install flask && pip install requests
+WORKDIR /word_replacer_app
+COPY app.py /app.py
+ENTRYPOINT ["python"]
+CMD ["/app.py"]

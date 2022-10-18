@@ -38,6 +38,6 @@ def word_replacer(input_string):
     output = ''
     for word in input_string.split():
         if word in replce_words_list:
-            word = word + '©'
+            word = word + r'©'
         output = output + word + ' '
     return output
