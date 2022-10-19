@@ -10,7 +10,7 @@ from word_replacer_eks_api.ci_cd.pipeline import Pipeline
 
 
 app = cdk.App()
-Pipeline(app, 'CICDStack',  
+Pipeline(app, 'CDKPipeline',  
     env=cdk.Environment(account='349115202997', region='us-east-1'),
     )
 # WordReplacerApiStack(app, "WordReplacerApiStack", 
