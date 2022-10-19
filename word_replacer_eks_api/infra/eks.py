@@ -20,8 +20,8 @@ class EKSStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
   
         self.vpc = vpc
-        self.cluster_name='Primary_Cluster'
-        self.cluster_env_name='Dev'
+        self.cluster_name='EKS_Cluster'
+        self.cluster_env_name= construct_id
         self.eks_cluster = self._create_eks()
         self._create_nodes() 
         self._deploy_aws_load_balancer_controller()

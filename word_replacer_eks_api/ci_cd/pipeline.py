@@ -1,10 +1,11 @@
  
 from word_replacer_eks_api.infra.vpc import  VPCStack
 from word_replacer_eks_api.infra.eks import EKSStack
+from word_replacer_eks_api.ci_cd.ci_cd import CICDStack
 
 import aws_cdk as cdk
 from constructs import Construct   
-from aws_cdk import pipelines, Stack   
+from aws_cdk import pipelines, Stack, aws_codebuild as codebuild,aws_codepipeline  as codepipeline, aws_codepipeline_actions as codepipeline_actions
 
 
 class Pipeline(Stack): 
@@ -23,19 +24,21 @@ class Pipeline(Stack):
                 "npm install -g aws-cdk",
                 "cdk synth",
             ],
+            primary_output_directory="cdk.out",
+            
+
             )
         )
-
- 
-        primary_region =cdk.Environment(account='349115202997', region='us-east-1') 
         
-         
-        pipeline.add_stage(EKS_VPC(self, "Dev", 
+        primary_region =cdk.Environment(account='349115202997', region='us-east-1')   
+        pipeline.add_stage(Deploy_VPC_EKS(self, "VPCEKS", 
                     env=primary_region, 
                 ))
-
-
-class EKS_VPC(cdk.Stage): 
+        pipeline.add_stage(CI_CDStack(self, "CICD", 
+                    env=primary_region, 
+                ))
+       
+class Deploy_VPC_EKS(cdk.Stage): 
     def __init__(
             self,
             scope: Construct,
@@ -58,3 +61,16 @@ class EKS_VPC(cdk.Stage):
                        vpc=vpc_stack.vpc, 
                         env = env
                        )
+
+class CI_CDStack(cdk.Stage): 
+    def __init__(
+            self,
+            scope: Construct,
+            id_: str,
+            *,
+            env: cdk.Environment,
+            outdir: str = None, 
+            
+    ):
+        super().__init__(scope, id_, env=env, outdir=outdir)
+        CICDStack(self, 'BuildImage', env = env)
