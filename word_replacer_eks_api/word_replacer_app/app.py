@@ -7,12 +7,15 @@ app = Flask(__name__)
 @app.route('/',methods = ['POST', 'GET'])
 def post_request():
         if request.method == 'POST': 
-            inputString = request.values['inputString']
+                
+            if 'inputString' in request.values:
+                inputString = request.values['inputString']                
+                return respond(None,word_replacer(inputString))            
+            else: 
+                return respond(None, "Please follow the request format : http:URL/?inputString=Amazon")
              
-            return respond(None,word_replacer(inputString))
-            
         if request.method == 'GET' :
-            return respond(None, 'Welcome to Word Replacer API')
+            return respond(None, 'Welcome to Word Replacer API. ')
  
 def word_replacer(input_string):
     replce_words_list = ['Oracle', 'Google', 'Microsoft','Amazon' , 'Deloitte' ]
