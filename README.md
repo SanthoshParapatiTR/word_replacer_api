@@ -1,42 +1,58 @@
 
-# Welcome to your CDK Python project!
+## Word Replacement API
 
-This is a blank project for CDK development with Python.
+## Overview
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+This project uses CDK Pipelines to define a self mutating pipeline to deploy and manage EKS Cluster(s) and Deployments . It uses CDK for cluster, node, infrastructure and app configuration.
+ 
+### Pipeline
+ 
+![EKS Architecture](eks_arch.png "EKS Architecture")
 
-This project is set up like a standard Python project.  The initialization
-process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
-(or `python` for Windows) executable in your path with access to the `venv`
-package. If for any reason the automatic creation of the virtualenv fails,
-you can create the virtualenv manually.
+![EKS CDK Infra Provisioning  Pipeline](cdk_pipeline.png "EKS CDK Infra Provisioning  Pipeline")
+ 
 
+### Project Structure
+word_replacer_api
+    - word_replacer_api (API Gateway + Word Replacer Lambda + Authorization Lambda )
+        - word_replacer_api_stack
+        - lambda_code
+    - word_replacer_eks_api (EKS Cluster + CICD Piplene to deploy Infra and app on K8s cluster)
+        - ci_cd
+            - pipeline (Deploying VPC and EKS Stacks)
+            - ci_cd (Deploying CICD pipeline for word_replacer_api on K8s)
+        - infra 
+            - vpc (cdk code)
+            - eks (cdk code)
+        - word_replacer_app
+            - code for api 
+            - kubernetes deploy manifest file
+
+
+### App
+
+- Deployment
+- Service
+- Ingress
+
+### DNS
+
+- Route53 (Need to be added )
+
+## Deployment
+
+To deploy the pipeline for the first time, you'll need to  deploy it using `cdk deploy`. After the first deploy, any change that you push to your Git Repository will update the Pipeline and execute.
+ 
+
+## Instrustions
 To manually create a virtualenv on MacOS and Linux:
 
 ```
-$ python -m venv .venv
-```
-
-After the init process completes and the virtualenv is created, you can use the following
-step to activate your virtualenv.
-
-```
+$ python -m venv .venv 
 $ source .venv/bin/activate
-```
-
-If you are a Windows platform, you would activate the virtualenv like this:
-
-```
 % .venv\Scripts\activate.bat
-```
-
-Once the virtualenv is activated, you can install the required dependencies.
-
-```
 $ pip install -r requirements.txt
 ```
-
 At this point you can now synthesize the CloudFormation template for this code.
 
 ```
