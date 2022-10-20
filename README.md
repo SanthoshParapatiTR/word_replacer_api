@@ -14,19 +14,19 @@ This project uses CDK Pipelines to define a self mutating pipeline to deploy and
 
 ### Project Structure
 word_replacer_api
-    - word_replacer_api (API Gateway + Word Replacer Lambda + Authorization Lambda )
-        - word_replacer_api_stack
-        - lambda_code
-    - word_replacer_eks_api (EKS Cluster + CICD Piplene to deploy Infra and app on K8s cluster)
-        - ci_cd
-            - pipeline (Deploying VPC and EKS Stacks)
-            - ci_cd (Deploying CICD pipeline for word_replacer_api on K8s)
-        - infra 
-            - vpc (cdk code)
-            - eks (cdk code)
-        - word_replacer_app
-            - code for api 
-            - kubernetes deploy manifest file
+-  word_replacer_api (API Gateway + Word Replacer Lambda + Authorization Lambda )
+     - word_replacer_api_stack
+     - lambda_code
+- word_replacer_eks_api (EKS Cluster + CICD Piplene to deploy Infra and app on K8s cluster)
+    - ci_cd
+        - pipeline (Deploying VPC and EKS Stacks)
+        - ci_cd (Deploying CICD pipeline for word_replacer_api on K8s)
+    - infra 
+        - vpc (cdk code)
+        - eks (cdk code)
+    - word_replacer_app
+        - code for word_replacer_app api 
+        - kubernetes deployment manifest file
 
 
 ### App
